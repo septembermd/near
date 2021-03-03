@@ -15,6 +15,10 @@ const options = {
   keyStore:    {}
 }
 
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function main() {
   // Configure the client with options and our local key store
   const client = await near.connect(options);
@@ -25,7 +29,7 @@ async function main() {
   const status = await provider.status();
   console.log("network status:", status);
   console.log('Wait...')
-  await setTimeout(() => {}, Math.random() * 10 + Math.random() * 180000)
+  await timeout(Math.random() * 10 + Math.random() * 180000)
 
   // 2) get latest block
   let block = await provider.block({ finality: "final" });
@@ -35,26 +39,26 @@ async function main() {
   block = await provider.block({ blockId: status.sync_info.latest_block_height });
   console.log("block by height:", block);
   console.log('Wait...')
-  await setTimeout(() => {}, Math.random() * 10 + Math.random() * 180000)
+  await timeout(Math.random() * 10 + Math.random() * 180000)
 
 
   // 4) get current validators
   const validators = await provider.validators(block.header.height);
   console.log("network validators:", validators);
   console.log('Wait...')
-  await setTimeout(() => {}, Math.random() * 10 + Math.random() * 180000)
+  await timeout(Math.random() * 10 + Math.random() * 180000)
 
   // 5) get account details
   const account = await client.account(options.accountId);
   console.log("account state:", await account.state());
   console.log('Wait...')
-  await setTimeout(() => {}, Math.random() * 10 + Math.random() * 180000)
+  await timeout(Math.random() * 10 + Math.random() * 180000)
 
   // 6) get gas price
   const gasPrice = await provider.sendJsonRpc("gas_price", [null]);
   console.log("gas price:", gasPrice);
   console.log('Wait...')
-  await setTimeout(() => {}, Math.random() * 10 + Math.random() * 180000)
+  await timeout(Math.random() * 10 + Math.random() * 180000)
 
   // Get current gas price from the block header
   const anotherBlock = await provider.sendJsonRpc("block", { finality: "final" });
