@@ -11,7 +11,7 @@ const options = {
   walletUrl:   `https://wallet.${process.env.NEAR_NETWORK}.near.org`,
   helperUrl:   `https://helper.${process.env.NEAR_NETWORK}.near.org`,
   explorerUrl: `https://explorer.${process.env.NEAR_NETWORK}.near.org`,
-  accountId:   process.env.NEAR_ACCOUNT, 
+  accountId:   process.env.NEAR_ACCOUNT,
   keyStore:    {}
 }
 
@@ -24,25 +24,37 @@ async function main() {
   // 1) get status
   const status = await provider.status();
   console.log("network status:", status);
+  console.log('Wait...')
+  await setTimeout(() => {}, Math.random() * 10 + Math.random() * 180000)
+
   // 2) get latest block
- 
-  // Get the latest block
   let block = await provider.block({ finality: "final" });
   console.log("current block:", block);
 
   // Get the block by number
   block = await provider.block({ blockId: status.sync_info.latest_block_height });
   console.log("block by height:", block);
+  console.log('Wait...')
+  await setTimeout(() => {}, Math.random() * 10 + Math.random() * 180000)
+
 
   // 4) get current validators
   const validators = await provider.validators(block.header.height);
   console.log("network validators:", validators);
+  console.log('Wait...')
+  await setTimeout(() => {}, Math.random() * 10 + Math.random() * 180000)
+
   // 5) get account details
   const account = await client.account(options.accountId);
   console.log("account state:", await account.state());
+  console.log('Wait...')
+  await setTimeout(() => {}, Math.random() * 10 + Math.random() * 180000)
+
   // 6) get gas price
   const gasPrice = await provider.sendJsonRpc("gas_price", [null]);
   console.log("gas price:", gasPrice);
+  console.log('Wait...')
+  await setTimeout(() => {}, Math.random() * 10 + Math.random() * 180000)
 
   // Get current gas price from the block header
   const anotherBlock = await provider.sendJsonRpc("block", { finality: "final" });
